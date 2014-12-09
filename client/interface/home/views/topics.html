@@ -1,0 +1,38 @@
+<template name="topics">
+  <div class="topics">
+    {{#each groups}}
+      <div class="row">
+        <div class="group large-2 columns">
+          <div class="name">
+            {{name}}
+          </div>
+        </div>
+        <div class="large-10 columns">
+          {{#each associatedTopics}}
+            <div class="topic row">
+              <div class="flex">
+                <div class="name">
+                  {{name}}
+                </div>
+                <div class="supporter-count">
+                  {{readableLongNumber supporterCount}} remember
+                  {{#if isSupportedByUser}}
+                    & <div class="inline deep-purple">you</div>
+                  {{/if}}
+                </div>
+                {{#if $not isSupportedByUser}}
+                  <div class="support">
+                    +
+                  </div>
+                {{/if}}
+              </div>
+              <div class="started">
+                started {{fullDate started}}
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</template>

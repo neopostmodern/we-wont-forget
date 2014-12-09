@@ -1,0 +1,8 @@
+*~
+.idea
+
+### Meteor template
+.meteor/local
+.meteor/meteorite
+
+
