@@ -1,6 +1,8 @@
 class @Tag extends Document
   @Meta
     name: 'Tag'
+    fields: =>
+      associatedTopics: [ @ReferenceField Topic, ['name', 'dateStarted', 'tags'] ]
 
 
 

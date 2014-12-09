@@ -27,7 +27,12 @@
                 {{/if}}
               </div>
               <div class="started">
-                started {{fullDate started}}
+                started {{fullDate dateStarted}}
+              </div>
+              <div class="tags">
+                {{#each tags}}
+                  {{name}}
+                {{/each}}
               </div>
             </div>
           {{/each}}
