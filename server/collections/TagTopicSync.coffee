@@ -7,16 +7,16 @@
 
 Meteor.methods(
   tag: (topicId, tagId) ->
-    tag = Tag.documents.findOne tagId
-    topic = Topic.documents.findOne topicId
+    tag = Tags.findOne tagId
+    topic = Topics.findOne topicId
 
-    Topic.documents.update topic._id,
+    Topics.update topic._id,
       $push:
         tags:
           _id: tag._id
           name: tag.name
 
-    Tag.documents.update tag._id,
+    Tags.update tag._id,
       $push:
         associatedTopics:
           _id: topic._id

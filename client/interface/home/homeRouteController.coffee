@@ -1,11 +1,20 @@
 homeRouter = RouteController.extend(
   template: 'home'
   waitOn: -> [
-    Meteor.subscribe Tag.SUBSCRIPTIONS.ALL, {}
-    Meteor.subscribe Topic.SUBSCRIPTIONS.ALL, {}
+    Meteor.subscribe Tags.SUBSCRIPTIONS.ALL, {}
+    Meteor.subscribe Topics.SUBSCRIPTIONS.ALL, {}
   ]
   data: ->
-    groups: Tag.documents.find()
+    groups: Tags.find()
+#    groups: Tags.find().fetch().map (tag) ->   # forEach (tag) ->
+#      console.log "Aggregating #{ tag.name }..."
+#      return {
+#        name: tag.name
+#        associatedTopics: Topics.find(
+#          _id: $in: tag.associatedTopics.map (topic) -> topic._id
+#        )
+#      }
+
 #    groups: [
 #      name: 'Global'
 #      topics: [
@@ -47,6 +56,8 @@ homeRouter.helpers(
       spacedNumber += text[position]
 
     return spacedNumber
+  topicsInList: (associatedTopicsList) ->
+    Topics.find(_id: $in: associatedTopicsList.map (topic) -> topic._id)
 )
 
 @HomeRouter = homeRouter

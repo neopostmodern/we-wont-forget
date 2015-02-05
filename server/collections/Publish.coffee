@@ -3,6 +3,6 @@
 #
 #  return Tags.find()
 
-Meteor.publish Tag.SUBSCRIPTIONS.ALL, -> return Tag.documents.find()
-Meteor.publish Topic.SUBSCRIPTIONS.ALL, -> return Topic.documents.find()
+Meteor.publish Tags.SUBSCRIPTIONS.ALL, -> return Tags.find()
+Meteor.publish Topics.SUBSCRIPTIONS.ALL, -> return Topics.find()
 
