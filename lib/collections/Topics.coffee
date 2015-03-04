@@ -9,10 +9,7 @@ Topics = new Mongo.Collection "topics"
 Topics.SUBSCRIPTIONS =
   ALL: "subscriptions:topics/all"
 
-
-@Topics = Topics
-
-@Topics.attachSchema new SimpleSchema(
+Topics.SCHEMA = new SimpleSchema(
   name:
     type: String
     label: 'Topic name'
@@ -21,6 +18,10 @@ Topics.SUBSCRIPTIONS =
     type: Number
     min: 0
     label: 'Supporter count'
+  dateStarted:
+    type: Date
+    label: 'Date started'
+    optional: true
   tags:
     type: [ Object ]
     label: 'Tags'
@@ -34,3 +35,7 @@ Topics.SUBSCRIPTIONS =
     label: 'Tag name'
     max: 50
 )
+
+@Topics = Topics
+
+@Topics.attachSchema @Topics.SCHEMA

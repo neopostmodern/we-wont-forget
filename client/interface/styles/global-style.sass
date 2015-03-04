@@ -1,6 +1,6 @@
 @import foundation
 
-$deep-purple: #800080
+@import constants
 
 h1
   font-style: italic
@@ -8,18 +8,54 @@ h1
 h2
   color: gray
 
+h3
+  text-transform: uppercase
+  font-size: 1.3rem
+
+  &.margin-top
+    margin-top: 2rem
+
 .link
-  color: $deep-purple
+  color: $highlight-color
 
   &:hover
     cursor: pointer
     text-decoration: underline
 
 .deep-purple
-  color: $deep-purple
+  color: $highlight-color
 
 .inline
   display: inline
 
 .flex
   display: flex
+
+.text-color-gray
+  color: gray
+
+.text-align-right
+  text-align: right
+
+
+input[type="email"], input[type="text"], input[type="password"], input[type="date"]
+  border: none
+  border-bottom: black 2px solid
+  width: 20rem
+  box-shadow: none
+
+  display: inline-block
+
+  &:focus
+    border-bottom-color: $highlight-color
+
+
+button
+  background: none
+
+  padding-top: 0.4rem
+  padding-bottom: 0.4rem
+  &:hover, &:focus
+    background: black
+    color: white
+

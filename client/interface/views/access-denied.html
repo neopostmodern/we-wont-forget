@@ -1,0 +1,13 @@
+<template name="access_denied">
+  <div class="row">
+    <div class="large-12 column">
+      <h1>access denied.</h1>
+      {{#if currentUser}}
+        <h2>sorry, you don't seem to belong here.</h2>
+      {{else}}
+        <h2>try logging in?</h2>
+      {{/if}}
+
+    </div>
+  </div>
+</template>

@@ -58,6 +58,20 @@ homeRouter.helpers(
     return spacedNumber
   topicsInList: (associatedTopicsList) ->
     Topics.find(_id: $in: associatedTopicsList.map (topic) -> topic._id)
+  isSupportedByUser: (topicId) ->
+    Meteor.user()? and topicId in Meteor.user().profile.supportedTopicIds
+)
+
+homeRouter.events(
+  'click .toggle-support': (event) ->
+    event.preventDefault()
+    Meteor.call("toggleSupportTopic", event.currentTarget.dataset.topicId, (error, result) ->
+      if error?
+        if error.error is share.ERRORS.LOG_IN_REQUIRED
+          alert "Please log in"
+        else
+          console.dir error
+    )
 )
 
 @HomeRouter = homeRouter

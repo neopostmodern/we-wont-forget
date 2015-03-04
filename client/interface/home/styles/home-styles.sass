@@ -1,12 +1,7 @@
-
-
-#login
-  position: absolute
-  top: -3rem
-  right: 0
+@import ../../styles/constants
 
 #main
-  margin-top: 5rem
+  // margin-top: 5rem
   position: relative
 
   .topics
@@ -38,12 +33,29 @@
       .supporter-count
         margin-top: 0.3rem
 
-      .support
-        margin-left: 0.5rem
-        font-size: 5rem
-        line-height: 2rem
-        color: gray
+      .toggle-support
+        display: inline-block
+
+        position: relative
+        height: 1rem
+        width: 2.5rem
 
         &:hover
           cursor: pointer
-          color: black
+
+
+        .add-support
+          display: inline-block
+          font-size: 5rem
+          line-height: 2rem
+          color: gray
+
+          position: absolute
+          top: -0.4rem
+          right: 0
+
+          &:hover
+            color: black
+
+  form
+    text-align: right

@@ -454,7 +454,7 @@ $h2-font-size: rem-calc(30);
 
 // We use these to control button text styles.
 // $button-font-family: $body-font-family;
-// $button-font-color: #fff;
+$button-font-color: black;
 // $button-font-color-alt: #333;
 // $button-font-tny: rem-calc(11);
 // $button-font-sml: rem-calc(13);
@@ -467,10 +467,10 @@ $h2-font-size: rem-calc(30);
 // $button-function-factor: -20%;
 
 // We use these to control button border styles.
-// $button-border-width: 0px;
+$button-border-width: 2px;
 // $button-border-style: solid;
-// $button-bg: $primary-color;
-// $button-border-color: scale-color($bg, $lightness: $button-function-factor);
+$button-bg: white;
+$button-border-color: black;
 
 // We use this to set the default radius used throughout the core.
 // $button-radius: $global-radius;
@@ -628,17 +628,17 @@ $h2-font-size: rem-calc(30);
 // $form-label-bottom-margin: 0;
 // $input-font-family: inherit;
 // $input-font-color: rgba(0,0,0,0.75);
-// $input-font-size: rem-calc(14);
-// $input-bg-color: #fff;
-// $input-focus-bg-color: scale-color(#fff, $lightness: -2%);
+$input-font-size: rem-calc(18);
+$input-bg-color: transparent;
+$input-focus-bg-color: transparent;
 // $input-border-color: scale-color(#fff, $lightness: -20%);
 // $input-focus-border-color: scale-color(#fff, $lightness: -40%);
 // $input-border-style: solid;
 // $input-border-width: 1px;
 // $input-border-radius: $global-radius;
 // $input-disabled-bg: #ddd;
-// $input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-// $input-include-glowing-effect: true;
+$input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+$input-include-glowing-effect: false;
 
 // We use these to style the fieldset border and spacing.
 // $fieldset-border-style: solid;

@@ -16,15 +16,17 @@
                 </div>
                 <div class="supporter-count">
                   {{readableLongNumber supporterCount}} remember
-                  {{#if isSupportedByUser}}
-                    & <div class="inline deep-purple">you</div>
-                  {{/if}}
-                </div>
-                {{#if $not isSupportedByUser}}
-                  <div class="support">
-                    +
+
+                  <div class="toggle-support" data-topic-id="{{_id}}">
+                    {{#if isSupportedByUser _id}}
+                      & <div class="inline deep-purple">you</div>
+                    {{else}}
+                      <div class="add-support">
+                        +
+                      </div>
+                    {{/if}}
                   </div>
-                {{/if}}
+                </div>
               </div>
               <div class="started">
                 started {{fullDate dateStarted}}
