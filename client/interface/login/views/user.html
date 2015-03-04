@@ -1,0 +1,21 @@
+<template name="user">
+  <div class="large-6 column">
+    <h2>Hello {{username}}.</h2>
+    Your e-mail is <i>{{email}}</i>.<br/>
+    You remember {{supportedTopicsCount}} issues.<br/>
+    {{#if userIs "admin"}}
+      You're an <b>administrator</b>.<br/>
+    {{/if}}
+    {{#if userIsCurator}}
+      You're a <b>curator</b>.<br/>
+    {{/if}}
+    {{#if userIs "mod"}}
+      You're a <b>moderator</b>.<br/>
+    {{/if}}
+    That's all we know about you.
+  </div>
+  <div class="large-6 column text-align-right">
+    <br/>
+    <button type="button" class="logout-action">log out</button>
+  </div>
+</template>

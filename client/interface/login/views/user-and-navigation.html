@@ -1,0 +1,32 @@
+<template name="user_and_navigation">
+  <div class="row" id="navigation">
+    <div class="large-6 column">
+      {{#if userIsCurator}}
+        <div class="menu">
+          <a href="{{pathFor route='home'}}">home</a>
+          <a href="{{pathFor route='curation'}}">curation</a>
+        </div>
+      {{/if}}
+    </div>
+    <div class="large-6 column">
+      <div id="login">
+        {{#if isClosed}}
+          {{#if currentUser}}
+            you're <div class="link inline open-user-area">{{username}}</div>
+          {{else}}
+            <div class="link inline open-login-area">log in</div>
+            or
+            <div class="link inline open-signup-area">sign up</div>
+          {{/if}}
+        {{else}}
+          <div class="link inline close-login-area">close</div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div id="login-fields" class="razorblade-modal {{#if isOpen}} open {{/if}}">
+    <div class="row">
+      {{> Template.dynamic template=actionTemplate}}
+    </div>
+  </div>
+</template>

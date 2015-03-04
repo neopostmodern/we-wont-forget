@@ -4,17 +4,14 @@
 #    fields: =>
 #      associatedTopics: [ @ReferenceField Topic, ['name', 'dateStarted', 'tags'] ]
 
-Tags = new Mongo.Collection "tags"
+tags = new Mongo.Collection "tags"
 
 
-Tags.SUBSCRIPTIONS =
+tags.SUBSCRIPTIONS =
   ALL: "subscriptions:tags/all"
   JOINED_WITH_TOPICS: "subscriptions:tags/with_topics"
 
-
-@Tags = Tags
-
-@Tags.attachSchema new SimpleSchema(
+tags.SCHEMA = new SimpleSchema(
   name:
     type: String
     label: 'Tag name'
@@ -30,4 +27,15 @@ Tags.SUBSCRIPTIONS =
     type: String
     label: 'Topic name'
     max: 200
+
+  visibility:
+    type: [ 'String' ]
+    label: 'Visibility for roles'
+
+
+  # todo: geo-tag
 )
+
+@Tags = tags
+
+@Tags.attachSchema tags.SCHEMA

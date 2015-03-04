@@ -1,21 +1,11 @@
-curationRouter = RouteController.extend(
-  template: 'curation'
-  onBeforeAction: ->
-    if not Roles.userIsInRole Meteor.userId(), 'curator'
-      @render('access_denied')
-      return
-
-    @next()
-
+baseListRouter = RouteController.extend(
   waitOn: -> [
     Meteor.subscribe Tags.SUBSCRIPTIONS.ALL, {}
     Meteor.subscribe Topics.SUBSCRIPTIONS.ALL, {}
   ]
-  data: ->
-    groups: Tags.find()
 )
 
-curationRouter.helpers(
+baseListRouter.helpers(
   $not: (boolean) -> not boolean
   fullDate: (date) -> moment(date).format('LL')
   readableLongNumber: (number) ->
@@ -36,11 +26,24 @@ curationRouter.helpers(
     Topics.find(_id: $in: associatedTopicsList.map (topic) -> topic._id)
   isSupportedByUser: (topicId) ->
     Meteor.user()? and topicId in Meteor.user().profile.supportedTopicIds
+  supportedTopicsCount: ->
+    Meteor.user()?.profile.supportedTopicIds.length
 )
 
-@CurationRouter = curationRouter
+baseListRouter.events(
+  'click .toggle-support': (event) ->
+    event.preventDefault()
+    Meteor.call("toggleSupportTopic", event.currentTarget.dataset.topicId, (error, result) ->
+      if error?
+        if error.error is share.ERRORS.LOG_IN_REQUIRED
+          alert "Please log in"
+        else
+          console.dir error
+    )
 
-Router.route(share.ROUTE.CURATION,
-  path: share.PATH.CURATION
-  controller: 'CurationRouter'
+  'click .add-mini-tag': (event, template) ->
+    Session.set share.SESSION.TOPIC_ID_FOR_MINI_TAG, event.currentTarget.dataset.topicId
+    share.Modal.openCustomDialog('mini_select_tag')
 )
+
+share.BaseListRouter = baseListRouter

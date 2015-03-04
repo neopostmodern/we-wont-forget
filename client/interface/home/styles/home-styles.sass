@@ -1,59 +1,69 @@
 @import ../../styles/constants
 
-#main
-  // margin-top: 5rem
-  position: relative
-  margin-bottom: 3rem
+.topics
+  margin-top: 1rem
 
-  .topics
-    margin-top: 1rem
+  .group
+    margin-bottom: 3rem
 
-    .group
-      margin-bottom: 3rem
+    .name
+      font-size: 1.8rem
+      padding-top: 0.8rem
 
-      .name
-        font-size: 1.8rem
-        padding-top: 0.8rem
+      font-style: italic
+      // text-transform: lowercase
+
+      a
         color: gray
 
-        font-style: italic
-        text-transform: lowercase
+  .topic
+    margin: 0.8rem 0 1.5rem
 
-    .topic
-      margin: 0.8rem 0 1.5rem
+    .name
+      font-size: 3rem
+      line-height: 3rem
 
-      .name
-        font-size: 3rem
-        line-height: 3rem
+      margin-right: auto
 
-        margin-right: auto
+    .started
+      color: gray
 
-      .started
-        color: gray
+    .supporter-count
+      margin-top: 0.3rem
 
-      .supporter-count
-        margin-top: 0.3rem
+    .toggle-support
+      display: inline-block
 
-      .toggle-support
+      position: relative
+      height: 1rem
+      width: 2.5rem
+
+      &:hover
+        cursor: pointer
+
+
+      .add-support
         display: inline-block
+        font-size: 5rem
+        line-height: 2rem
+        color: gray
 
-        position: relative
-        height: 1rem
-        width: 2.5rem
+        position: absolute
+        top: -0.4rem
+        right: 0
 
         &:hover
-          cursor: pointer
+          color: black
 
+    .tags
+      .tag
+        display: inline-block
+        margin-right: 0.5em
 
-        .add-support
-          display: inline-block
-          font-size: 5rem
-          line-height: 2rem
-          color: gray
+        a
+          color: black
 
-          position: absolute
-          top: -0.4rem
-          right: 0
+  .topic:hover
 
-          &:hover
-            color: black
+    .add-mini-tag
+      display: inline-block

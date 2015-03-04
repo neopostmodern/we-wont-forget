@@ -1,0 +1,14 @@
+<template name="modal">
+  <div id="overlay" class="{{#if modalIsOpen}}open{{/if}}">
+    <div class="content-area">
+    </div>
+
+    {{> Template.dynamic template=modalTemplateName}}
+
+    <!--
+    <div class="buttons">
+      <button type="button">cancel</button>
+    </div>
+    -->
+  </div>
+</template>

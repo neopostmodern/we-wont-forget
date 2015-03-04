@@ -28,6 +28,9 @@ h3
 .inline
   display: inline
 
+.hidden
+  display: none
+
 .flex
   display: flex
 
@@ -40,8 +43,15 @@ h3
 .text-align-center
   text-align: center
 
+footer
+  text-align: right
+  color: $gray
 
-input[type="email"], input[type="text"], input[type="password"], input[type="date"]
+  margin-top: 2rem
+  margin-bottom: 2rem
+
+
+input[type="email"], input[type="text"], input[type="password"], input[type="date"], input[type="search"]
   border: none
   border-bottom: black 2px solid
   width: 20rem
@@ -58,7 +68,26 @@ button
 
   padding-top: 0.4rem
   padding-bottom: 0.4rem
-  &:hover, &:focus
+  &:hover
     background: black
     color: white
+  &:focus
+    background: none
+    color: black
 
+
+
+.razorblade-modal
+  transition: all .5s ease-in-out
+  background-color: #e5e5e5
+  margin-top: 0.5rem
+  box-shadow: inset 0px 0px 10px 0px rgba(50, 50, 50, 0.75)
+
+  max-height: 0
+  height: auto
+  overflow: hidden
+  padding-top: 0rem
+
+  &.open
+    padding: 1.5rem 0 0.5rem
+    max-height: 20rem

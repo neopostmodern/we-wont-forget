@@ -1,0 +1,16 @@
+<template name="mini_select_tag">
+  <div class="row">
+    <div class="large-4 large-offset-4 column">
+      <div class="dialog">
+        <h2>select a tag</h2>
+        <input type="search" class="tag-search" style="width: 14rem;" placeholder="filter tags" />
+
+        <div class="scroll" style="max-height: 5rem; overflow-y: scroll">
+          {{#each filteredTags}}
+            <div class="link tag-to-add" data-tag-id="{{_id}}">{{name}}</div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

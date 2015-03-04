@@ -1,45 +1,43 @@
 <template name="home">
-  <div class="row" id="main">
+  <div class="row">
     <div class="large-12 columns">
       <h1>we won't forget</h1>
-      <h2>a wall to remind us of political crisis when media will forget them</h2>
+      <h2>a wall to remind us of unresolved political topics when media will forget them</h2>
+    </div>
+  </div>
 
-      {{#if userIsSubscribedToNewsletter}} {{!-- todo: build hook --}}
-        you're subscribed
-      {{else}}
-        {{> newsletter_subscription}}
-      {{/if}}
-
-      {{> topics}}
-
-      <h2 style="margin-top: 3rem">that's all we have registered for now.</h2>
-
-      <h3 class="margin-top">Suggestions</h3>
-      if you think there's something missing, write a suggestion!<br/>
-      {{#if currentUser}}
-        <form>
-          <div class="row">
-            <div class="large-9 column">
-              <input type="text" placeholder="title" />
-              <input type="date" placeholder="date started" />
-              <textarea placeholder="description of crisis">
-
-              </textarea>
-
-            </div>
-            <div class="large-3 column text-align-right">
-              <button type="submit">suggest</button>
-            </div>
-          </div>
-        </form>
-      {{else}}
-        <div class="panel text-align-center" style="margin-top: 1rem;">
-          <i style="font-size: 130%;">
-            we're sorry. <br/>
-            for now &mdash; to prevent spam &mdash; you need to log in or sign up to write a suggestion.
-          </i>
+  {{#if userIsCurator}}
+    <div class="row" style="margin-top: 1rem;">
+      <div class="large-10 columns">
+        <div class="toolbar">
+          <button type="button" class="home_curation-add-topic">add topic</button>
+          <button type="button" class="home_curation-add-tag">add tag</button>
         </div>
-      {{/if}}
+      </div>
+      <div class="large-2 columns text-align-right">
+        {{#if isHomeCurationOpen}}
+          <i class="link" style="position: relative; top: 2rem;">close</i>
+        {{/if}}
+      </div>
+    </div>
+    <div class="razorblade-modal {{#if isHomeCurationOpen}}open{{/if}}">
+      {{> Template.dynamic template=homeCurationTemplateName}}
+    </div>
+  {{else}}
+    <div class="row">
+      <div class="large-12 columns">
+        {{#if userIsSubscribedToNewsletter}} {{!-- todo: build hook --}}
+          you're subscribed
+        {{else}}
+          {{> newsletter_subscription}}
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+
+  <div class="row">
+    <div class="large-12 columns">
+      {{> list}}
     </div>
   </div>
 </template>

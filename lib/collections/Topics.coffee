@@ -24,7 +24,7 @@ Topics.SCHEMA = new SimpleSchema(
     optional: true
   tags:
     type: [ Object ]
-    label: 'Tags'
+    label: 'tags'
     maxCount: 5
   'tags.$._id':
     type: String

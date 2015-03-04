@@ -5,19 +5,25 @@ STATUS_USER = 'user'
 
 LOGIN_ERROR = 'login-error'
 
-Template.login.helpers(
-  isClosed: -> not Session.get(LOGIN_FIELD_STATUS)? or Session.get(LOGIN_FIELD_STATUS).trim().length is 0
-  isOpen: -> not Template.layout.isClosed()
+
+Template.user_and_navigation.helpers(
+  isClosed: -> share.HELPERS.isRazorbladeModalClosed(LOGIN_FIELD_STATUS)
+  isOpen: -> not share.HELPERS.isRazorbladeModalClosed(LOGIN_FIELD_STATUS)
   isLogin: -> Session.get(LOGIN_FIELD_STATUS) is STATUS_LOGIN
   isSignUp: -> Session.get(LOGIN_FIELD_STATUS) is STATUS_SIGNUP
   isUser: -> Session.get(LOGIN_FIELD_STATUS) is STATUS_USER
 
-  username: -> Meteor.user()?.profile.username
+  actionTemplate: ->
+    switch Session.get LOGIN_FIELD_STATUS
+      when STATUS_LOGIN then 'login'
+      when STATUS_SIGNUP then 'signup'
+      when STATUS_USER then 'user'
+
   email: -> Meteor.user()?.emails[0].address
   loginError: -> Session.get LOGIN_ERROR
 )
 
-Template.login.events(
+Template.user_and_navigation.events(
   'click .open-login-area': (event) ->
     Session.set LOGIN_FIELD_STATUS, STATUS_LOGIN
   'click .open-signup-area': (event) ->

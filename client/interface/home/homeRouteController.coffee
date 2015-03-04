@@ -1,12 +1,12 @@
+HOME_CURATION_STATUS = 'homeCurationStatus'
+STATUS_ADD_TOPIC = 'addTopic'
+STATUS_ADD_TAG = 'addTag'
 
 Session.setDefault "topicGroupsCount", 3
 
-homeRouter = RouteController.extend(
+homeRouter = share.BaseListRouter.extend(
   template: 'home'
-  waitOn: -> [
-    Meteor.subscribe Tags.SUBSCRIPTIONS.ALL, {}
-    Meteor.subscribe Topics.SUBSCRIPTIONS.ALL, {}
-  ]
+
   data: ->
     groups: Tags.find({}, limit: Session.get "topicGroupsCount")
 
@@ -23,38 +23,25 @@ homeRouter = RouteController.extend(
 )
 
 homeRouter.helpers(
-  $not: (boolean) -> not boolean
-  fullDate: (date) -> moment(date).format('LL')
-  readableLongNumber: (number) ->
-    if not number?
-      return ""
+  isHomeCurationClosed: -> share.HELPERS.isRazorbladeModalClosed(HOME_CURATION_STATUS)
+  isHomeCurationOpen: -> not share.HELPERS.isRazorbladeModalClosed(HOME_CURATION_STATUS)
 
-    text = number.toString()
-    spacedNumber = ""
-    offset = text.length % 3
-
-    for position in [0 ... text.length]
-      if (position - offset) % 3 is 0
-        spacedNumber += " "
-      spacedNumber += text[position]
-
-    return spacedNumber
-  topicsInList: (associatedTopicsList) ->
-    Topics.find(_id: $in: associatedTopicsList.map (topic) -> topic._id)
-  isSupportedByUser: (topicId) ->
-    Meteor.user()? and topicId in Meteor.user().profile.supportedTopicIds
+  homeCurationTemplateName: ->
+    switch Session.get HOME_CURATION_STATUS
+      when STATUS_ADD_TOPIC then "add_topic"
+      when STATUS_ADD_TAG then "add_tag"
 )
 
+closeCurationRazorbladeModal = ->
+  Session.set HOME_CURATION_STATUS, null
+
 homeRouter.events(
-  'click .toggle-support': (event) ->
-    event.preventDefault()
-    Meteor.call("toggleSupportTopic", event.currentTarget.dataset.topicId, (error, result) ->
-      if error?
-        if error.error is share.ERRORS.LOG_IN_REQUIRED
-          alert "Please log in"
-        else
-          console.dir error
-    )
+  'click .home_curation-add-topic': ->
+    Session.set HOME_CURATION_STATUS, STATUS_ADD_TOPIC
+    share.EscapeManager.register(callback: closeCurationRazorbladeModal, group: 'home-curation')
+  'click .home_curation-add-tag': ->
+    Session.set HOME_CURATION_STATUS, STATUS_ADD_TAG
+    share.EscapeManager.register(callback: closeCurationRazorbladeModal, group: 'home-curation')
 )
 
 @HomeRouter = homeRouter

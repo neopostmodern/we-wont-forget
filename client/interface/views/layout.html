@@ -1,5 +1,16 @@
 <template name="layout">
-  {{> login}}
+  {{> modal}}
+
+  {{> user_and_navigation}}
 
   {{> yield}}
+
+  <footer>
+    <div class="row">
+      <div class="large-12 column">
+        made in Berlin by <a href="http://neopostmodern.com/">neo post modern</a> and <a href="https://github.com/neopostmodern/we-wont-forget">open sourced</a><br/>
+        <i>special &hearts; to the amazing people behind Meteor (incl. roles, collection2 and simple-schema), CoffeeScript, Foundation and Inkscape (for drafting)</i>
+      </div>
+    </div>
+  </footer>
 </template>
