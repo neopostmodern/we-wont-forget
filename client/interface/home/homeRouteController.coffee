@@ -1,3 +1,6 @@
+
+Session.setDefault "topicGroupsCount", 3
+
 homeRouter = RouteController.extend(
   template: 'home'
   waitOn: -> [
@@ -5,38 +8,18 @@ homeRouter = RouteController.extend(
     Meteor.subscribe Topics.SUBSCRIPTIONS.ALL, {}
   ]
   data: ->
-    groups: Tags.find()
-#    groups: Tags.find().fetch().map (tag) ->   # forEach (tag) ->
-#      console.log "Aggregating #{ tag.name }..."
-#      return {
-#        name: tag.name
-#        associatedTopics: Topics.find(
-#          _id: $in: tag.associatedTopics.map (topic) -> topic._id
-#        )
-#      }
+    groups: Tags.find({}, limit: Session.get "topicGroupsCount")
 
-#    groups: [
-#      name: 'Global'
-#      topics: [
-#        name: 'NSA Scandal'
-#        started: moment('3 jan 2013').toDate()
-#        supporterCount: 12940
-#      ,
-#        name: 'Syrian War'
-#        supporterCount: 1340
-#      ]
-#    ,
-#      name: 'Germany'
-#      topics: [
-#        name: 'BER'
-#        started: moment('12 oct 2012').toDate()
-#        supporterCount: 10022940
-#      ,
-#        name: 'TIPP'
-#        supporterCount: 140
-#        isSupportedByUser: true
-#      ]
-#    ]
+  onRun: ->
+    $("body").on('arrivedAtBottom', ->
+      currentTopicGroupsCount = Session.get "topicGroupsCount"
+      if currentTopicGroupsCount < Tags.find().count()
+        Session.set "topicGroupsCount", currentTopicGroupsCount + 3
+    )
+    @next()
+
+  onStop: ->
+    $("body").off('arrivedAtBottom')
 )
 
 homeRouter.helpers(

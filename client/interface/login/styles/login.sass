@@ -3,19 +3,23 @@
   text-align: right
 
 #login-fields
-  transition: all .2s ease-in-out
+  transition: all .5s ease-in-out
   background-color: #e5e5e5
   margin-top: 0.5rem
   box-shadow: inset 0px 0px 10px 0px rgba(50, 50, 50, 0.75)
 
-  height: 0
+  max-height: 0
+  height: auto
   overflow: hidden
 
-  &.login
-    height: 7rem
+  &.login, &.signup, &.user
+    max-height: 20rem
 
-  &.signup
-    height: 16rem
-
-  &.user
-    height: 7rem
+  //&.login
+  //  height: 7rem
+  //
+  //&.signup
+  //  height: 16rem
+  //
+  //&.user
+  //  height: 7rem
