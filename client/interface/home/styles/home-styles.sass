@@ -1,0 +1,61 @@
+@import ../../styles/constants
+
+#main
+  // margin-top: 5rem
+  position: relative
+
+  .topics
+    margin-top: 1rem
+
+    .group
+      margin-bottom: 3rem
+
+      .name
+        font-size: 1.8rem
+        padding-top: 0.8rem
+        color: gray
+
+        font-style: italic
+        text-transform: lowercase
+
+    .topic
+      margin: 0.8rem 0 1.5rem
+
+      .name
+        font-size: 3rem
+        line-height: 3rem
+
+        margin-right: auto
+
+      .started
+        color: gray
+
+      .supporter-count
+        margin-top: 0.3rem
+
+      .toggle-support
+        display: inline-block
+
+        position: relative
+        height: 1rem
+        width: 2.5rem
+
+        &:hover
+          cursor: pointer
+
+
+        .add-support
+          display: inline-block
+          font-size: 5rem
+          line-height: 2rem
+          color: gray
+
+          position: absolute
+          top: -0.4rem
+          right: 0
+
+          &:hover
+            color: black
+
+  form
+    text-align: right

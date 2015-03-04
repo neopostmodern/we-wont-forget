@@ -1,0 +1,19 @@
+<template name="newsletter_subscription">
+  <div class="row">
+    <div class="medium-4 large-6 columns">
+      let us help you remember.<br/>
+      straight to your inbox, every saturday morning.
+    </div>
+    <div class="medium-8 large-6 columns">
+      <form>
+        {{#if currentUser}}
+          <i class="text-color-gray">you'll subscribe with {{email}}</i>
+          &nbsp;&nbsp;&nbsp;
+        {{else}}
+          <input type="email" placeholder="you@domain.com" />
+        {{/if}}
+        <button type="submit">subscribe</button>
+      </form>
+    </div>
+  </div>
+</template>

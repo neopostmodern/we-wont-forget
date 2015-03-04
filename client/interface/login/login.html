@@ -1,0 +1,62 @@
+<template name="login">
+  <div class="row">
+    <div class="large-12 column">
+      <div id="login">
+        {{#if isClosed}}
+          {{#if currentUser}}
+            you're <div class="link inline open-user-area">{{username}}</div>
+            {{#if userIsCurator}}
+              - <a href="curate">enter curation</a>
+            {{/if}}
+          {{else}}
+            <div class="link inline open-login-area">log in</div>
+            or
+            <div class="link inline open-signup-area">sign up</div>
+          {{/if}}
+        {{else}}
+          <div class="link inline close-login-area">close</div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div id="login-fields" class="{{#if isLogin}} login {{/if}}{{#if isSignUp}} signup {{/if}}{{#if isUser}} user {{/if}}">
+    <div class="row" style="padding: 1rem 0;">
+      {{#if isLogin}}
+        <div class="large-12 column" id="login-section">
+          <form id="login-form">
+            <input type="email" placeholder="e-mail address" id="login-mail" />
+            <input type="password" placeholder="password" id="login-password" />
+
+            <button type="submit">log in</button>
+          </form>
+          <i class="open-signup-area link">sign up instead?</i>
+          <i>lost your password?</i>
+        </div>
+      {{/if}}
+      {{#if isSignUp}}
+        <div class="large-6 column">
+          <form>
+            <input type="email" placeholder="e-mail address" />
+            <input type="password" placeholder="password" />
+            <input type="password" placeholder="repeat password" />
+
+            <div style="text-align: right">
+              <button type="submit">sign up</button>
+            </div>
+          </form>
+          <i class="open-login-area link">login instead?</i>
+        </div>
+      {{/if}}
+      {{#if isUser}}
+        <div class="large-6 column">
+          <h2>Hello {{username}}.</h2>
+          You're e-mail is <i>{{email}}</i>, that's all we know about you.
+        </div>
+        <div class="large-6 column text-align-right">
+          <br/>
+          <button type="button" class="logout-action">log out</button>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+</template>

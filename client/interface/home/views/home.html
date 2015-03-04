@@ -1,0 +1,16 @@
+<template name="home">
+  <div class="row" id="main">
+    <div class="large-12 columns">
+      <h1>we won't forget</h1>
+      <h2>a wall to remind us of political crisis when media will forget them</h2>
+
+      {{#if userIsSubscribedToNewsletter}} {{!-- todo: build hook --}}
+        you're subscribed
+      {{else}}
+        {{> newsletter_subscription}}
+      {{/if}}
+
+      {{> topics}}
+    </div>
+  </div>
+</template>
