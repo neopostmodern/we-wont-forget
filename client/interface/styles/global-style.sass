@@ -51,9 +51,11 @@ footer
   margin-bottom: 2rem
 
 
+$input-border: black 2px solid
+
 input[type="email"], input[type="text"], input[type="password"], input[type="date"], input[type="search"]
   border: none
-  border-bottom: black 2px solid
+  border-bottom: $input-border
   width: 20rem
   box-shadow: none
 
@@ -61,6 +63,12 @@ input[type="email"], input[type="text"], input[type="password"], input[type="dat
 
   &:focus
     border-bottom-color: $highlight-color
+
+textarea
+  border: $input-border
+
+  &:focus
+    border-color: $highlight-color
 
 
 button
