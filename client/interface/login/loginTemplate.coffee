@@ -23,16 +23,22 @@ Template.user_and_navigation.helpers(
   loginError: -> Session.get LOGIN_ERROR
 )
 
+closeLoginArea = ->
+  Session.set LOGIN_ERROR, null
+  Session.set LOGIN_FIELD_STATUS, null
+
 Template.user_and_navigation.events(
   'click .open-login-area': (event) ->
     Session.set LOGIN_FIELD_STATUS, STATUS_LOGIN
+    share.EscapeManager.register(callback: closeLoginArea, group: 'user-and-login')
   'click .open-signup-area': (event) ->
     Session.set LOGIN_FIELD_STATUS, STATUS_SIGNUP
+    share.EscapeManager.register(callback: closeLoginArea, group: 'user-and-login')
   'click .open-user-area': (event) ->
     Session.set LOGIN_FIELD_STATUS, STATUS_USER
+    share.EscapeManager.register(callback: closeLoginArea, group: 'user-and-login')
   'click .close-login-area': (event) ->
-    Session.set LOGIN_ERROR, null
-    Session.set LOGIN_FIELD_STATUS, null
+    closeLoginArea()
 
   'submit #login-form': (event, template) ->
     event.preventDefault()
@@ -47,11 +53,10 @@ Template.user_and_navigation.events(
             template.find('#login-section').classList.remove('animated-error')
           , 600)
         else
-          Session.set LOGIN_ERROR, null
-          Session.set LOGIN_FIELD_STATUS, null
+          closeLoginArea()
     )
   'click .logout-action': (event) ->
     event.preventDefault()
-    Session.set LOGIN_FIELD_STATUS, null
     Meteor.logout()
+    closeLoginArea()
 )

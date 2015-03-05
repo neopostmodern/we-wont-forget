@@ -18,3 +18,4 @@ neopostmodern:pikaday
 accounts-meteor-developer
 service-configuration
 neopostmodern:accounts-emails-field
+gfk:mailgun-api

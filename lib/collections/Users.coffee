@@ -39,6 +39,14 @@ Schema.User = new SimpleSchema(
     regEx: SimpleSchema.RegEx.Email
   'registered_emails.$.verified':
     type: Boolean
+
+  pending:
+    type: Object
+    optional: true
+  'pending.status':
+    type: Boolean
+  'pending.key':
+    type: String
 )
 
 Meteor.users.attachSchema Schema.User
