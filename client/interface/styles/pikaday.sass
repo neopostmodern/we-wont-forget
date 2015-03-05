@@ -1,6 +1,6 @@
 @import constants
 
-.pika-label
+.pika-label, .pika-table thead
   font-family: $font-family
 
 .pika-table
@@ -12,6 +12,16 @@
     background: none
     color: black
     box-shadow: none
+    border: 1px solid black
+    
+  .is-today &
+    font-weight: bold
+    background-color: #e5e5e5
+
+  .is-disabled &
+    font-style: italic
+    color: lightgray
 
   &:hover
+    color: black
     background: none

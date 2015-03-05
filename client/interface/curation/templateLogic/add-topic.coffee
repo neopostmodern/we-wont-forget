@@ -11,8 +11,4 @@ Template.add_topic.events(
 )
 
 Template.add_topic.rendered = ->
-  $('.datepicker').each((index, element) ->
-    new Pikaday(
-      field: element
-    )
-  )
+  share.HELPERS.activateDatepickers()

@@ -1,20 +1,30 @@
 #if Tag.documents.find().count() is 0
 _randomInt = (upperLimit) -> Math.round(Math.random() * upperLimit)
 
+checkRootAccess = ->
+  if not Roles.userIsInRole(Meteor.userId(), 'admin') or not @connection?
+    throw new Meteor.Error 401, "Root access not granted"
+
 Meteor.methods(
   reset: ->
+    checkRootAccess()
+
     Meteor.call 'deleteEverything'
     Meteor.call 'createTestUser'
     Meteor.call 'createTestData'
 
 
   deleteEverything: ->
+    checkRootAccess()
+
     Tags.remove({})
     Topics.remove({})
     Meteor.users.remove({})
     share.IncludeDefaultData()
 
   createTestUser: ->
+    checkRootAccess()
+
     console.log "Adding user."
 
     myUserId = Accounts.createUser(
@@ -28,6 +38,8 @@ Meteor.methods(
     Roles.addUsersToRoles(myUserId, ['admin', 'curator', 'mod'])
 
   createTestData: ->
+    checkRootAccess()
+
     TAG_COUNT = 10
     TOPIC_COUNT = 30
     TAGS_PER_TOPIC = 3

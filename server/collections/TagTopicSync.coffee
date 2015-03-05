@@ -6,11 +6,14 @@
 #  )
 
 isServerSideCall = -> not @connection?
+checkRole = (roleName, errorText) ->
+  if not (Roles.userIsInRole(Meteor.userId(), roleName) or isServerSideCall())
+    throw new Meteor.Error 403, errorText
+  return
 
 methods =
   tag: (topicId, tagId) ->
-    if not Roles.userIsInRole(Meteor.userId(), 'curator') or isServerSideCall()
-      throw new Meteor.Error 403
+    checkRole 'curator', 'Insufficient privileges to tag.'
 
     tag = Tags.findOne tagId
     topic = Topics.findOne topicId
@@ -40,8 +43,7 @@ methods =
 
 
   untag: (topicId, tagId) ->
-    if not Roles.userIsInRole(Meteor.userId(), 'curator') or isServerSideCall()
-      throw new Meteor.Error 403
+    checkRole 'curator', 'Insufficient privileges to untag.'
 
     console.log "Untagging #{ topicId } from #{ tagId }"
 
@@ -119,8 +121,7 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
   Tags.insert(tag)
 
 methods['createTopic'] = (topic) ->
-  if not Roles.userIsInRole(Meteor.userId(), 'curator') or isServerSideCall()
-    throw new Meteor.Error 403
+  checkRole 'curator', 'Insufficient privileges to create topic.'
 
   topic ?= {}
   topic.supporterCount = 0
@@ -128,10 +129,9 @@ methods['createTopic'] = (topic) ->
 
   check topic, Topics.SCHEMA
 
-  if Roles.userIsInRole Meteor.userId(), 'curator'
-    topicId = Topics.insert(topic)
+  topicId = Topics.insert(topic)
 
-    Meteor.call 'tag', topicId, 'untagged'
+  Meteor.call 'tag', topicId, 'untagged'
 
 Meteor.methods(methods)
 
