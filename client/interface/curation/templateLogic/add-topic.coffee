@@ -9,3 +9,10 @@ Template.add_topic.events(
       console.dir error
     )
 )
+
+Template.add_topic.rendered = ->
+  $('.datepicker').each((index, element) ->
+    new Pikaday(
+      field: element
+    )
+  )
