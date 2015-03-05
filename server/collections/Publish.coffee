@@ -3,6 +3,16 @@
 #
 #  return Tags.find()
 
+Meteor.publish Meteor.users.SUBSCRIPTIONS.OWN_PROFILE, ->
+  if @userId
+    if Roles.userIsInRole(@userId, 'admin')
+      Meteor.users.find()
+    else
+      console.dir Meteor.users.find({ _id: @userId }, fields: { profile: 1, registered_emails: 1 }).fetch()
+      Meteor.users.find({ _id: @userId }, fields: { profile: 1, registered_emails: 1 })
+  else
+    []
+
 Meteor.publish Tags.SUBSCRIPTIONS.ALL, ->
   roles = Roles.getRolesForUser(@userId)
   roles.push('all')

@@ -12,7 +12,8 @@ share.HELPERS =
     )
 
 
-Template.registerHelper "email", -> Meteor.user()?.emails[0].address
+Template.registerHelper "email", ->
+  Meteor.user()?.registered_emails?[0].address
 
 Template.registerHelper "userIsCurator", -> Roles.userIsInRole Meteor.userId(), "curator"
 Template.registerHelper "userIs", (roleName) -> Roles.userIsInRole Meteor.userId(), roleName

@@ -2,7 +2,7 @@
 _randomInt = (upperLimit) -> Math.round(Math.random() * upperLimit)
 
 checkRootAccess = ->
-  if not Roles.userIsInRole(Meteor.userId(), 'admin') or not @connection?
+  if not (Roles.userIsInRole(Meteor.userId(), 'admin') or not @connection?)
     throw new Meteor.Error 401, "Root access not granted"
 
 Meteor.methods(

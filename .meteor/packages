@@ -15,3 +15,6 @@ alanning:roles
 aldeed:simple-schema
 accounts-password
 neopostmodern:pikaday
+accounts-meteor-developer
+service-configuration
+neopostmodern:accounts-emails-field

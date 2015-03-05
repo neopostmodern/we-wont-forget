@@ -1,0 +1,32 @@
+<template name="signup">
+  <div class="row">
+    <div class="large-7 columns">
+      <form>
+        <div class="row">
+          <div class="large-8 columns">
+            <input type="text" placeholder="username" style="margin-bottom: 0;" /><br/>
+            <i class="text-color-gray">optional, but you will feel more at home.</i><br/>
+            <br/>
+            <input type="email" placeholder="e-mail address" />
+            <input type="password" placeholder="password" />
+            <input type="password" placeholder="repeat password" />
+          </div>
+          <div class="large-4 columns">
+            <button type="submit">sign up</button><br/>
+            <i class="open-login-area link">login instead?</i>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="large-4 columns">
+      sign up with other services:
+      <div id="signup-services">
+        <button type="button" disabled>Facebook</button><br/>
+        <button type="button" disabled>Twitter</button><br/>
+        <button type="button" disabled>Meetup</button><br/>
+        <button type="button" disabled>Github</button><br/>
+        <button type="button" class="meteor">Meteor</button>
+      </div>
+    </div>
+  </div>
+</template>

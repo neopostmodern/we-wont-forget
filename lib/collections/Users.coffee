@@ -16,7 +16,8 @@ Schema.User = new SimpleSchema(
   'emails.$.address':
     type: String
     regEx: SimpleSchema.RegEx.Email
-  'emails.$.verified': type: Boolean
+  'emails.$.verified':
+    type: Boolean
   createdAt: type: Date
   profile:
     type: Schema.UserProfile
@@ -27,9 +28,20 @@ Schema.User = new SimpleSchema(
     blackbox: true
 
   roles:
-    type: [String],
+    type: [String]
     optional: true
 
+  registered_emails:
+    type: [ Object ]
+    optional: true
+  'registered_emails.$.address':
+    type: String
+    regEx: SimpleSchema.RegEx.Email
+  'registered_emails.$.verified':
+    type: Boolean
 )
 
 Meteor.users.attachSchema Schema.User
+
+Meteor.users.SUBSCRIPTIONS =
+  OWN_PROFILE: 'userProfileSubscription'
