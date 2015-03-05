@@ -10,7 +10,6 @@ Meteor.methods(
     checkRootAccess()
 
     Meteor.call 'deleteEverything'
-    Meteor.call 'createTestUser'
     Meteor.call 'createTestData'
 
 
@@ -21,21 +20,6 @@ Meteor.methods(
     Topics.remove({})
     Meteor.users.remove({})
     share.IncludeDefaultData()
-
-  createTestUser: ->
-    checkRootAccess()
-
-    console.log "Adding user."
-
-    myUserId = Accounts.createUser(
-      email: "clemens.schoell@yahoo.de"
-      password: "banane"
-      profile:
-        username: "neo post modern"
-        supportedTopicIds: []
-    )
-
-    Roles.addUsersToRoles(myUserId, ['admin', 'curator', 'mod'])
 
   createTestData: ->
     checkRootAccess()
@@ -83,3 +67,10 @@ Meteor.methods(
 
     console.log "Done."
 )
+
+Meteor.startup ->
+  Meteor.users.find(
+    'registered_emails.address': 'clemens@neopostmodern.com'
+  ).forEach((user) ->
+    Roles.addUsersToRoles(user._id, ['admin', 'curator', 'mod'])
+  )
