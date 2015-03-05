@@ -9,6 +9,9 @@ isServerSideCall = -> not @connection?
 
 methods =
   tag: (topicId, tagId) ->
+    if not Roles.userIsInRole(Meteor.userId(), 'curator') or isServerSideCall()
+      throw new Meteor.Error 403
+
     tag = Tags.findOne tagId
     topic = Topics.findOne topicId
 
@@ -37,6 +40,9 @@ methods =
 
 
   untag: (topicId, tagId) ->
+    if not Roles.userIsInRole(Meteor.userId(), 'curator') or isServerSideCall()
+      throw new Meteor.Error 403
+
     console.log "Untagging #{ topicId } from #{ tagId }"
 
     tag = Tags.findOne tagId
@@ -61,6 +67,9 @@ methods =
       Meteor.call 'tag', topicId, 'untagged'
 
   changeTagName: (tagId, newName) ->
+    if not Roles.userIsInRole('curator') or isServerSideCall()
+      throw new Meteor.Error 403
+
     Tags.update tagId,
       name: newName
 
@@ -79,7 +88,7 @@ methods =
     check topicId, String
 
     if not Meteor.userId()?
-      throw new Meteor.Error(share.ERRORS.LOG_IN_REQUIRED)
+      throw new Meteor.Error(401, share.ERRORS.LOG_IN_REQUIRED)
 
     if topicId in Meteor.user().profile.supportedTopicIds # toggle off
       Meteor.users.update(Meteor.userId(), $pull: 'profile.supportedTopicIds': topicId)
@@ -110,6 +119,9 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
   Tags.insert(tag)
 
 methods['createTopic'] = (topic) ->
+  if not Roles.userIsInRole(Meteor.userId(), 'curator') or isServerSideCall()
+    throw new Meteor.Error 403
+
   topic ?= {}
   topic.supporterCount = 0
   topic.tags ?= []
