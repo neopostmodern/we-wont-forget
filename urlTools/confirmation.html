@@ -1,0 +1,17 @@
+<template name="confirmation">
+  <div class="row" style="margin-bottom: 5rem;">
+    <div class="large-12 column">
+      <h1><a href="/">we won't forget</a></h1>
+      {{#if ready}}
+        {{#if error}}
+          {{error}}
+        {{else}}
+          <h2>{{confirmMessage}}</h2>
+          Back to the <a href="/">actual page</a>?
+        {{/if}}
+      {{else}}
+        <h2>Processing your confirmation...</h2>
+      {{/if}}
+    </div>
+  </div>
+</template>

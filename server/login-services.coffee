@@ -8,3 +8,13 @@ ServiceConfiguration.configurations.upsert(
     }
   }
 )
+ServiceConfiguration.configurations.upsert(
+  { service: 'facebook' },
+  {
+    $set: {
+      appId: Meteor.settings.authenticationProviders.facebook.appId,
+      secret: Meteor.settings.authenticationProviders.facebook.appSecret,
+      loginStyle: 'popup'
+    }
+  }
+)

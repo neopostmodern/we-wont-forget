@@ -133,6 +133,24 @@ methods['createTopic'] = (topic) ->
 
   Meteor.call 'tag', topicId, 'untagged'
 
+methods[share.METHODS.SUGGEST_TOPIC] = (topic) ->
+  check topic, { title: String, description: String, dateStarted: Match.Optional(Date) }
+
+  text = "Project \"we won't forget\"\n\nNew topic suggested: #{topic.title}\n"
+  if topic.dateStarted?
+    text += "Started #{new moment(topic.dateStarted).format("YYYY-MM-DD")}\n"
+  else
+    text += "No start date specified.\n"
+  text += "Description:\n\"#{ topic.description }\""
+  text += "\n\nBest,\nYour server."
+
+  Meteor.call('email', {
+    from: 'clemens@neopostmodern.com'
+    to: 'clemens@neopostmodern.com'
+    subject: "WE WON'T FORGET - New topic suggested: #{topic.title}"
+    text: text
+  })
+
 Meteor.methods(methods)
 
 #    Topics.update {'tags._id': tagId},

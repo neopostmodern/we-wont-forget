@@ -1,0 +1,12 @@
+<template name="suggest_topic">
+  {{#if currentUser}}
+    {{> suggest_topic_form}}
+  {{else}}
+    <div class="panel text-align-center" style="margin-top: 1rem;">
+      <i style="font-size: 130%;">
+        we're sorry. <br/>
+        for now &mdash; to prevent spam &mdash; you need to log in or sign up to write a suggestion.
+      </i>
+    </div>
+  {{/if}}
+</template>

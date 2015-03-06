@@ -5,6 +5,16 @@
 h1
   font-style: italic
 
+  a
+    color: inherit
+
+    &:hover
+      color: inherit
+      text-decoration: underline
+
+    &:focus
+      color: inherit
+
 h2
   color: gray
 
@@ -83,6 +93,15 @@ button
     background: none
     color: black
 
+  &.disabled, &[disabled]
+    background: none
+    color: gray
+    border-color: gray
+
+    &:hover
+      background: none
+      color: gray
+
 
 
 .razorblade-modal
@@ -99,3 +118,5 @@ button
   &.open
     padding: 1.5rem 0 0.5rem
     max-height: 20rem
+
+  // todo: change to scaleY based transitions (issue: content disappears preliminarily)

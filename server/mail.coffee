@@ -3,11 +3,16 @@ mailGun = new Mailgun(
 )
 
 Meteor.startup ->
-  process.env.MAIL_URL = "smtp://postmaster%40sandboxc92c966545074009b332a8f02d0e7fb4.mailgun.org:#{ Meteor.settings.email.mailgun.password }@smtp.mailgun.org"
+  process.env.MAIL_URL = "smtp://#{ Meteor.settings.email.mailgun.username }:#{ Meteor.settings.email.mailgun.password }@smtp.mailgun.org"
 
 Meteor.methods(
   'email': (email) ->
-    mailGun.send(
-      email
-    )
+    email.from ?= 'clemens@neopostmodern.com' #todo: actual e-mail address!
+
+    # todo: mailgun doesn't work?
+#    mailGun.send(
+#      email
+#    )
+
+    Email.send(email)
 )

@@ -44,6 +44,25 @@ baseListRouter.events(
   'click .add-mini-tag': (event, template) ->
     Session.set share.SESSION.TOPIC_ID_FOR_MINI_TAG, event.currentTarget.dataset.topicId
     share.Modal.openCustomDialog('mini_select_tag')
+
+  'submit form#suggest-topic': (event, template) ->
+    event.preventDefault()
+
+
+    suggestedTopic =
+      title: template.find('input.title').value.trim()
+      description: template.find('textarea.description').value
+
+    dateString = template.find('input.date').value.trim()
+    if dateString.length isnt 0
+      suggestedTopic.dateStarted = new moment(dateString, 'YYYY-MM-DD').toDate()
+
+    Meteor.call(share.METHODS.SUGGEST_TOPIC, suggestedTopic, (error) ->
+      if error?
+        console.dir error
+      else
+        alert "Thank you"
+    )
 )
 
 share.BaseListRouter = baseListRouter

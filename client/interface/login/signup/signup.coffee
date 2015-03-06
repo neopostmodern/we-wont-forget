@@ -29,4 +29,12 @@ Template.signup.events(
       else
         share.EscapeManager.close()
     )
+
+  'click #signup-services button.facebook': (event, template) ->
+    Meteor.loginWithFacebook((error) ->
+      if error?
+        console.dir error #todo: what?
+      else
+        share.EscapeManager.close()
+    )
 )

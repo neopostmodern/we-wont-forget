@@ -1,7 +1,7 @@
 <template name="tag">
   <div class="row" id="main">
     <div class="large-12 columns">
-      <h1>we won't forget: {{selectedTag.name}}</h1>
+      <h1><a href="/">we won't forget</a>: {{selectedTag.name}}</h1>
       you're only seeing issues tagged with <i>{{selectedTag.name}}</i> - see <a href="{{pathFor 'home'}}">all</a>?
 
       {{> list}}

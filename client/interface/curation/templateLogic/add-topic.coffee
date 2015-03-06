@@ -11,4 +11,4 @@ Template.add_topic.events(
 )
 
 Template.add_topic.rendered = ->
-  share.HELPERS.activateDatepickers()
+  share.HELPERS.activateDatepickers(this)
