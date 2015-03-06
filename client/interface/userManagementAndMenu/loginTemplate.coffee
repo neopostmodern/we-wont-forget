@@ -40,21 +40,6 @@ Template.user_and_navigation.events(
   'click .close-login-area': (event) ->
     closeLoginArea()
 
-  'submit #login-form': (event, template) ->
-    event.preventDefault()
-    Meteor.loginWithPassword(
-      template.find('#login-mail').value,
-      template.find('#login-password').value,
-      (error) ->
-        if error?
-          Session.set LOGIN_ERROR, error.reason
-          template.find('#login-section').classList.add('animated-error')
-          window.setTimeout(->
-            template.find('#login-section').classList.remove('animated-error')
-          , 600)
-        else
-          closeLoginArea()
-    )
   'click .logout-action': (event) ->
     event.preventDefault()
     Meteor.logout()

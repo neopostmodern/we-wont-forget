@@ -14,6 +14,12 @@ methods[share.METHODS.CONFIRM_SUBSCRIPTION] = (pendingSubscriptionId) ->
       active: true
   )
 
+  if subscription.userId?
+    Meteor.users.update({ _id: subscription.userId },
+      $set:
+        'profile.subscriptionStatus': 'active'
+    )
+
   return true
 
 Meteor.methods(methods)

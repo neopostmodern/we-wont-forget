@@ -20,6 +20,7 @@ share.METHODS =
   SUGGEST_TOPIC: 'suggestTopic'
   CONFIRM_SUBSCRIPTION: 'confirmSubscription'
   SUBSCRIBE_WITH_EMAIL: 'subscribeWithEmail'
+  IS_SUBSCRIBED: 'isSubscribed'
 
 share.SESSION =
   TOPIC_ID_FOR_MINI_TAG: 'topicIdForMiniTag'

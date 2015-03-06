@@ -7,6 +7,10 @@ Schema.UserProfile = new SimpleSchema(
   username:
     type: String
     label: 'Username (not necessarily unique)'
+  subscriptionStatus:
+    type: String
+    label: 'Status of subscription'
+    optional: true
 )
 
 Schema.User = new SimpleSchema(

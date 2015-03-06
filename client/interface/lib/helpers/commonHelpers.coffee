@@ -15,6 +15,12 @@ share.HELPERS =
 share.HELPERS.userEmailAddress = ->
   Meteor.user()?.registered_emails?[0].address
 
+share.HELPERS.visualError = (element) ->
+  element.classList.add('animated-error')
+  window.setTimeout(->
+    element.classList.remove('animated-error')
+  , 600)
+
 Template.registerHelper "email", share.HELPERS.userEmailAddress
 
 Template.registerHelper "userIsCurator", -> Roles.userIsInRole Meteor.userId(), "curator"

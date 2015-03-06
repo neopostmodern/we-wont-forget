@@ -1,3 +1,10 @@
+Template.newsletter_subscription.helpers(
+  'userEligibleForSubscription': ->
+    not Meteor.user()?.profile.subscriptionStatus?
+  'userSubscriptionPending': ->
+    Meteor.user()?.profile.subscriptionStatus is 'pending'
+)
+
 Template.newsletter_subscription.events(
   'submit form#newsletter-subscription': (event, template) ->
     event.preventDefault()
@@ -7,7 +14,6 @@ Template.newsletter_subscription.events(
     Meteor.call share.METHODS.SUBSCRIBE_WITH_EMAIL, emailAddress, (error) ->
       if error?
         console.dir error
-      else
-        alert "You're subscribed.\nConfirm your e-mail to complete."
+        share.HELPERS.visualError(template.find('#newsletter-subscription'))
      #todo: error handling
 )

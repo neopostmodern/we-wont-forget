@@ -26,11 +26,7 @@
   {{else}}
     <div class="row">
       <div class="large-12 columns">
-        {{#if userIsSubscribedToNewsletter}} {{!-- todo: build hook --}}
-          you're subscribed
-        {{else}}
-          {{> newsletter_subscription}}
-        {{/if}}
+        {{> newsletter_subscription}}
       </div>
     </div>
   {{/if}}
