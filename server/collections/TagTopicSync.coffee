@@ -5,15 +5,9 @@
 #    $push: topicIds: @_id
 #  )
 
-isServerSideCall = -> not @connection?
-checkRole = (roleName, errorText) ->
-  if not (Roles.userIsInRole(Meteor.userId(), roleName) or isServerSideCall())
-    throw new Meteor.Error 403, errorText
-  return
-
 methods =
   tag: (topicId, tagId) ->
-    checkRole 'curator', 'Insufficient privileges to tag.'
+    Security.checkRole 'curator', 'Insufficient privileges to tag.'
 
     tag = Tags.findOne tagId
     topic = Topics.findOne topicId
@@ -69,8 +63,7 @@ methods =
       Meteor.call 'tag', topicId, 'untagged'
 
   changeTagName: (tagId, newName) ->
-    if not Roles.userIsInRole('curator') or isServerSideCall()
-      throw new Meteor.Error 403
+    Security.checkRole 'curator'
 
     Tags.update tagId,
       name: newName
