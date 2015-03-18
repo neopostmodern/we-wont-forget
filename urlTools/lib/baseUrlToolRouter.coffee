@@ -1,5 +1,5 @@
 baseUrlToolRouter = RouteController.extend(
-  template: "confirmation"
+  template: "url_tool_request"
 )
 
 baseUrlToolRouter.helpers(
@@ -7,13 +7,16 @@ baseUrlToolRouter.helpers(
     @state.get share.BaseUrlToolRouter.STATE.READY
   error: ->
     @state.get share.BaseUrlToolRouter.STATE.ERROR
-  confirmMessage: ->
-    @state.get share.BaseUrlToolRouter.STATE.CONFIRM_MESSAGE
+  message: ->
+    @state.get share.BaseUrlToolRouter.STATE.MESSAGE
+  taskName: ->
+    @state.get share.BaseUrlToolRouter.STATE.TASK_NAME
 )
 
 baseUrlToolRouter.STATE =
   READY: 'ready'
   ERROR: 'error'
-  CONFIRM_MESSAGE: 'confirmMessage'
+  MESSAGE: 'message'
+  TASK_NAME: 'taskName'
 
 share.BaseUrlToolRouter = baseUrlToolRouter

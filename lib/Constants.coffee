@@ -4,6 +4,7 @@ share.PATH =
   CURATION: '/curate'
 
   CONFIRM_SUBSCRIPTION: '/_/confirmSubscription/:_id'
+  END_SUBSCRIPTION: '/_/endSubscription/:_id'
 
 share.ROUTE =
   HOME: 'home'
@@ -11,6 +12,7 @@ share.ROUTE =
   CURATION: 'curation'
 
   CONFIRM_SUBSCRIPTION: 'confirmSubscription'
+  END_SUBSCRIPTION: 'endSubscription'
 
 share.ERRORS =
   LOG_IN_REQUIRED: 'login-required'
@@ -21,6 +23,7 @@ share.METHODS =
   CONFIRM_SUBSCRIPTION: 'confirmSubscription'
   SUBSCRIBE_WITH_EMAIL: 'subscribeWithEmail'
   IS_SUBSCRIBED: 'isSubscribed'
+  END_SUBSCRIPTION: 'endSubscription'
 
 share.SESSION =
   TOPIC_ID_FOR_MINI_TAG: 'topicIdForMiniTag'

@@ -1,0 +1,19 @@
+<template name="url_tool_request">
+  <div class="row" style="margin-bottom: 5rem;">
+    <div class="large-12 column">
+      <h1><a href="/">we won't forget</a></h1>
+      <i>{{taskName}}</i><br/><br/><br/>
+      {{#if ready}}
+        {{#if error}}
+          <h2>{{error}}</h2>
+          <a href="/"><button type="button">that's unfortunate</button></a>
+        {{else}}
+          <h2>{{message}}</h2>
+          <a href="/"><button type="button">okay</button></a>
+        {{/if}}
+      {{else}}
+        <h2>Processing your {{taskName}}...</h2>
+      {{/if}}
+    </div>
+  </div>
+</template>

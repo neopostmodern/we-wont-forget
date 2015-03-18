@@ -7,7 +7,7 @@ Meteor.startup ->
 
 Meteor.methods(
   'email': (email) ->
-    email.from ?= 'clemens@neopostmodern.com' #todo: actual e-mail address!
+    email.from ?= "#{ Meteor.settings.email.from.name } <#{ Meteor.settings.email.from.emailAddress }>"
 
     # todo: mailgun doesn't work?
 #    mailGun.send(

@@ -1,12 +1,14 @@
 confirmSubscriptionRouter = share.BaseUrlToolRouter.extend(
   onBeforeAction: ->
+    @state.set share.BaseUrlToolRouter.STATE.TASK_NAME, "Subscription to broadcast"
+
     Meteor.call('confirmSubscription', @params._id, (error, result) =>
       @state.set share.BaseUrlToolRouter.STATE.READY, true
 
       if error?
         @state.set share.BaseUrlToolRouter.STATE.ERROR, error # todo
       else
-        @state.set share.BaseUrlToolRouter.STATE.CONFIRM_MESSAGE, "Subscription confirmed!"
+        @state.set share.BaseUrlToolRouter.STATE.MESSAGE, "Subscription confirmed!"
     )
 
     @next()

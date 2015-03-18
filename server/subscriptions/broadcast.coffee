@@ -1,11 +1,13 @@
 _randomInt = (upperLimit) -> Math.round(Math.random() * upperLimit)
 
 Meteor.methods(
-  generateBroadcastForUserAsMarkdown: (userId) ->
+  generateBroadcastForUserAsMarkdown: (subscriptionId) ->
     Security.checkRole 'admin'
 
+    subscription = Subscriptions.findOne subscriptionId
+
     # hack: very inefficient
-    topics = Topics.QUERY.forUser(userId).fetch()
+    topics = Topics.QUERY.forUser(subscription.userId).fetch()
     topic_count = Math.min(topics.length, 10)
     # tags = Tags.QUERY.forUser(userId)
 
@@ -26,7 +28,12 @@ Meteor.methods(
             #{topics_text}
 
             See all at [we won't forget](#{ Meteor.absoluteUrl() })
+
+            **It's beta.** Broadcasts will, if at all, come unregularly and might contain mistakes. You can [report bugs](#{ Meteor.settings.email.from.emailAddress })
             """
+
+    if subscriptionId?
+      text += "\n\n[Unsubscribe](#{ Meteor.absoluteUrl() }_/endSubscription/#{ subscriptionId })"
 
     return text
 
@@ -41,7 +48,7 @@ Meteor.methods(
       active: true
       confirmed: true
     ).forEach((subscription) ->
-      Meteor.call('generateBroadcastForUserAsMarkdown', subscription.userId, (error, markdown) ->
+      Meteor.call('generateBroadcastForUserAsMarkdown', subscription._id, (error, markdown) ->
         # console.log "For #{subscription.email}:\n#{markdown}\n"
 
         Meteor.call('email',
