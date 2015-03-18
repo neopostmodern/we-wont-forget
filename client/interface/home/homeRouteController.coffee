@@ -2,7 +2,7 @@ HOME_CURATION_STATUS = 'homeCurationStatus'
 STATUS_ADD_TOPIC = 'addTopic'
 STATUS_ADD_TAG = 'addTag'
 
-Session.setDefault "topicGroupsCount", 3
+Session.setDefault "topicGroupsCount", 10
 
 homeRouter = share.BaseListRouter.extend(
   template: 'home'

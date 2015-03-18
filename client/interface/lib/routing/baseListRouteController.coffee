@@ -1,4 +1,5 @@
 baseListRouter = RouteController.extend(
+  loadingTemplate: 'loading'
   waitOn: -> [
     Meteor.subscribe Tags.SUBSCRIPTIONS.ALL, {}
     Meteor.subscribe Topics.SUBSCRIPTIONS.ALL, {}
