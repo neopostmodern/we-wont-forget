@@ -9,7 +9,7 @@ Meteor.publish Meteor.users.SUBSCRIPTIONS.OWN_PROFILE, ->
 
 Tags.QUERY =
   forUser: (userId) ->
-    roles = Roles.getRolesForUser(@userId)
+    roles = Roles.getRolesForUser(userId)
     roles.push('all')
 
     return Tags.find({ visibility: $in: roles }, fields: { visibility: 0 })

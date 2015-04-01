@@ -37,7 +37,7 @@ methods =
 
 
   untag: (topicId, tagId) ->
-    checkRole 'curator', 'Insufficient privileges to untag.'
+    Security.checkRole 'curator', 'Insufficient privileges to untag.'
 
     console.log "Untagging #{ topicId } from #{ tagId }"
 
@@ -114,7 +114,7 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
   Tags.insert(tag)
 
 methods['createTopic'] = (topic) ->
-  checkRole 'curator', 'Insufficient privileges to create topic.'
+  Security.checkRole 'curator', 'Insufficient privileges to create topic.'
 
   topic ?= {}
   topic.supporterCount = 0

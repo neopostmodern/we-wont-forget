@@ -84,5 +84,7 @@ methods[share.METHODS.END_SUBSCRIPTION] = (subscriptionId) ->
 
   return true
 
+# todo: re-subscribe
+
 
 Meteor.methods(methods)

@@ -7,7 +7,7 @@ Meteor.methods(
     subscription = Subscriptions.findOne subscriptionId
 
     # hack: very inefficient
-    topics = Topics.QUERY.forUser(subscription.userId).fetch()
+    topics = Topics.QUERY.forUser(subscription?.userId).fetch()
     topic_count = Math.min(topics.length, 10)
     # tags = Tags.QUERY.forUser(userId)
 

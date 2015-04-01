@@ -6,7 +6,8 @@ Template.add_topic.events(
       name: template.find('.topic-title').value
       dateStarted: moment(template.find('.topic-start_date').value, "YYYY-MM-DD").toDate()
     , (error) ->
-      console.dir error
+      if error?
+        console.dir error
     )
 )
 
