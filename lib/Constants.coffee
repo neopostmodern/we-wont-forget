@@ -1,6 +1,7 @@
 share.PATH =
   HOME: '/'
   TAG: '/tag/:_id'
+  TOPIC: '/topic/:_id'
   CURATION: '/curate'
 
   CONFIRM_SUBSCRIPTION: '/_/confirmSubscription/:_id'
@@ -9,6 +10,7 @@ share.PATH =
 share.ROUTE =
   HOME: 'home'
   TAG: 'tag'
+  TOPIC: 'topic'
   CURATION: 'curation'
 
   CONFIRM_SUBSCRIPTION: 'confirmSubscription'
@@ -24,6 +26,10 @@ share.METHODS =
   SUBSCRIBE_WITH_EMAIL: 'subscribeWithEmail'
   IS_SUBSCRIBED: 'isSubscribed'
   END_SUBSCRIPTION: 'endSubscription'
+  WIKIPEDIA_SUMMARY: 'wikipediaSummary'
+  WIKIPEDIA_SEARCH: 'wikipediaSearch'
+  ADD_WIKIPEDIA_PAGE_ID: 'addWikipediaPageId'
+  ADD_WIKIPEDIA_PAGE_BY_TITLE: 'addWikipediaPageByTitle'
 
 share.SESSION =
   TOPIC_ID_FOR_MINI_TAG: 'topicIdForMiniTag'

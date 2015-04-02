@@ -26,3 +26,19 @@ Template.registerHelper "email", share.HELPERS.userEmailAddress
 Template.registerHelper "userIsCurator", -> Roles.userIsInRole Meteor.userId(), "curator"
 Template.registerHelper "userIs", (roleName) -> Roles.userIsInRole Meteor.userId(), roleName
 Template.registerHelper "username", -> Meteor.user()?.profile.username
+
+Template.registerHelper "fullDate", (date) -> moment(date).format('LL')
+Template.registerHelper "readableLongNumber", (number) ->
+  if not number?
+    return ""
+
+  text = number.toString()
+  spacedNumber = ""
+  offset = text.length % 3
+
+  for position in [0 ... text.length]
+    if (position - offset) % 3 is 0
+      spacedNumber += " "
+    spacedNumber += text[position]
+
+  return spacedNumber

@@ -1,0 +1,53 @@
+<template name="topic">
+  <div class="row topic-view" id="main">
+    <div class="large-12 columns">
+      <h1><a href="/">we won't forget</a>: {{topic.name}}</h1>
+      {{#if userIs 'curator'}}
+        Search for the matching Wikipedia page:
+        <form id="search-wikipedia">
+          <input type="text" class="wikipedia-query" placeholder="Search Wikipedia" value="{{topic.name}}" />
+          <button type="submit">search</button>
+        </form>
+        <br/>
+        <table class="table" id="wikipedia-results" style="width: 100%">
+          {{#if wikipediaIsSearching}}
+            <tr><td>Searching...</td></tr>
+          {{else}}
+            {{#each wikipediaResults}}
+              <tr>
+                <td><b>{{title}}</b></td>
+                <td>{{description}} <i><a href="{{url}}">more...</a></i></td>
+                <td><button type="button" data-title="{{title}}">select</button></td>
+              </tr>
+            {{else}}
+              <tr><td>No results.</td></tr>
+            {{/each}}
+          {{/if}}
+        </table>
+      {{/if}}
+
+      <div class="row">
+        <div class="large-8 columns">
+          {{#if topic.wikipediaPageId}}
+            <small>This article is from a <a href="http://en.wikipedia.org/?curid={{topic.wikipediaPageId}}">Wikipedia article</a>, which is released under the <a href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-Share-Alike License 3.0</a>.</small>
+
+            {{{wikipediaSummary topic.wikipediaPageId}}}
+
+            <div class="text-align-right">
+              <a href="http://en.wikipedia.org/?curid={{topic.wikipediaPageId}}">Read full article at Wikipedia.org</a>
+            </div>
+          {{else}}
+            <i>We don't have a linked Wikipedia article for this topic yet or it doesn't exist.</i>
+          {{/if}}
+        </div>
+        <div class="large-4 columns">
+          <div style="margin-bottom: 3rem">
+            started <b>{{fullDate dateStarted}}</b>
+          </div>
+          {{> taglist topic}}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>

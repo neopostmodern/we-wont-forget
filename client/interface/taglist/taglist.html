@@ -1,0 +1,10 @@
+<template name="taglist">
+  <div class="tags">
+    {{#each tags}}
+      <i class="tag"><a href="{{pathFor route='tag'}}">#{{name}}</a></i>
+    {{/each}}
+    {{#if userIs 'curator'}}
+      <i class="add-mini-tag link" data-topic-id="{{_id}}">add a tag</i>
+    {{/if}}
+  </div>
+</template>

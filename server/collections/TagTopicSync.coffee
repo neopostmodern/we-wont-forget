@@ -113,6 +113,34 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
 
   Tags.insert(tag)
 
+
+methods[share.METHODS.ADD_WIKIPEDIA_PAGE_ID] = (wikipediaPageId, topicId) ->
+  Security.checkRole 'curator', "Insufficient privileges to add Wikipedia references."
+
+  check wikipediaPageId, Match.OneOf String, Match.Integer
+  check topicId, String
+
+  topic = Topics.findOne topicId
+  if not topic?
+    throw new Meteor.Error 404, "No topic with this ID."
+
+  # check existence. throws error if not found
+  pageSummary = Wikipedia.getSummaryForPageId wikipediaPageId
+
+  Topics.update topicId, $set: wikipediaPageId: wikipediaPageId
+
+  return
+
+methods[share.METHODS.ADD_WIKIPEDIA_PAGE_BY_TITLE] = (wikipediaPageTitle, topicId) ->
+  Security.checkRole 'curator', "Insufficient privileges to add Wikipedia references."
+
+  check wikipediaPageTitle, String
+  check topicId, String
+
+  pageId = Wikipedia.resolvePageTitleToId wikipediaPageTitle
+
+  Meteor.call share.METHODS.ADD_WIKIPEDIA_PAGE_ID, pageId, topicId
+
 methods['createTopic'] = (topic) ->
   Security.checkRole 'curator', 'Insufficient privileges to create topic.'
 
