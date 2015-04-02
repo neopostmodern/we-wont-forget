@@ -100,7 +100,7 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
 
   tag.visibility ?= ['all']
 
-  if not (isServerSideCall() or tag.visibility.filter((role) -> not Roles.userIsInRole(Meteor.userId(), role)).length is 0)
+  if not (Security.isServerSideCall() or tag.visibility.filter((role) -> not Roles.userIsInRole(Meteor.userId(), role)).length is 0)
     throw new Meteor.Error(403, "User not  allowed to specify this visibility constraint.")
 
   check tag, Tags.SCHEMA
@@ -108,7 +108,7 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
   if Tags.find(name: tag.name).count() > 0
     throw new Meteor.Error("Duplicate tag name")
 
-  if isServerSideCall() and _id?
+  if Security.isServerSideCall() and _id?
     tag._id = _id
 
   Tags.insert(tag)
