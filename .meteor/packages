@@ -17,10 +17,13 @@ accounts-password
 neopostmodern:pikaday
 accounts-meteor-developer
 service-configuration
-neopostmodern:accounts-emails-field
 gfk:mailgun-api
 accounts-facebook
 email
 chuangbo:marked
 percolate:migrations
 neopostmodern:wikipedia
+flowkey:user-location
+splendido:accounts-emails-field
+mike:mocha
+http
