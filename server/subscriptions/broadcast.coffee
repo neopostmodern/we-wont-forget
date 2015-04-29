@@ -2,7 +2,7 @@ _randomInt = (upperLimit) -> Math.round(Math.random() * upperLimit)
 
 Meteor.methods(
   generateBroadcastForUserAsMarkdown: (subscriptionId) ->
-    Security.checkRole 'admin'
+    Security.checkRole this, 'admin'
 
     subscription = Subscriptions.findOne subscriptionId
 
@@ -38,7 +38,7 @@ Meteor.methods(
     return text
 
   broadcast: ->
-    Security.checkRole 'admin'
+    Security.checkRole this, 'admin'
 
     @unblock()
 

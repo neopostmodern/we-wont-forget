@@ -13,7 +13,7 @@ Accounts.onCreateUser((options, user) ->
 
   user.profile =
     supportedTopicIds: []
-    username: options.profile.name ? options.profile.username
+    username: options.profile?.name ? options.profile?.username
 
   if options.pending
     pendingKey = Meteor.uuid()

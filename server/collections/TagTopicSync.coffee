@@ -7,7 +7,7 @@
 
 methods =
   tag: (topicId, tagId) ->
-    Security.checkRole 'curator', 'Insufficient privileges to tag.'
+    Security.checkRole this, 'curator', 'Insufficient privileges to tag.'
 
     tag = Tags.findOne tagId
     topic = Topics.findOne topicId
@@ -37,7 +37,7 @@ methods =
 
 
   untag: (topicId, tagId) ->
-    Security.checkRole 'curator', 'Insufficient privileges to untag.'
+    Security.checkRole this, 'curator', 'Insufficient privileges to untag.'
 
     console.log "Untagging #{ topicId } from #{ tagId }"
 
@@ -63,7 +63,7 @@ methods =
       Meteor.call 'tag', topicId, 'untagged'
 
   changeTagName: (tagId, newName) ->
-    Security.checkRole 'curator'
+    Security.checkRole this, 'curator'
 
     Tags.update tagId,
       name: newName
@@ -115,7 +115,7 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
 
 
 methods[share.METHODS.ADD_WIKIPEDIA_PAGE_ID] = (wikipediaPageId, topicId) ->
-  Security.checkRole 'curator', "Insufficient privileges to add Wikipedia references."
+  Security.checkRole this, 'curator', "Insufficient privileges to add Wikipedia references."
 
   check wikipediaPageId, Match.OneOf String, Match.Integer
   check topicId, String
@@ -132,7 +132,7 @@ methods[share.METHODS.ADD_WIKIPEDIA_PAGE_ID] = (wikipediaPageId, topicId) ->
   return
 
 methods[share.METHODS.ADD_WIKIPEDIA_PAGE_BY_TITLE] = (wikipediaPageTitle, topicId) ->
-  Security.checkRole 'curator', "Insufficient privileges to add Wikipedia references."
+  Security.checkRole this, 'curator', "Insufficient privileges to add Wikipedia references."
 
   check wikipediaPageTitle, String
   check topicId, String
@@ -142,7 +142,7 @@ methods[share.METHODS.ADD_WIKIPEDIA_PAGE_BY_TITLE] = (wikipediaPageTitle, topicI
   Meteor.call share.METHODS.ADD_WIKIPEDIA_PAGE_ID, pageId, topicId
 
 methods['createTopic'] = (topic) ->
-  Security.checkRole 'curator', 'Insufficient privileges to create topic.'
+  Security.checkRole this, 'curator', 'Insufficient privileges to create topic.'
 
   topic ?= {}
   topic.supporterCount = 0
@@ -153,6 +153,8 @@ methods['createTopic'] = (topic) ->
   topicId = Topics.insert(topic)
 
   Meteor.call 'tag', topicId, 'untagged'
+
+  return Topics.findOne topicId
 
 methods[share.METHODS.SUGGEST_TOPIC] = (topic) ->
   check topic, { title: String, description: String, dateStarted: Match.Optional(Date) }

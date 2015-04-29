@@ -38,6 +38,7 @@ Topics.SCHEMA = new SimpleSchema(
     type: String
     label: 'Wikipedia Page ID'
     max: 50
+    optional: true
 )
 
 @Topics = Topics

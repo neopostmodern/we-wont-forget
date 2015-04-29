@@ -4,7 +4,7 @@
       <i class="tag"><a href="{{pathFor route='tag'}}">#{{name}}</a></i>
     {{/each}}
     {{#if userIs 'curator'}}
-      <i class="add-mini-tag link" data-topic-id="{{_id}}">add a tag</i>
+      <i class="add-mini-tag link" data-topic-id="{{_id}}">add a tag</i> <!-- todo: move tagging logic into this stand-alone unit -->
     {{/if}}
   </div>
 </template>

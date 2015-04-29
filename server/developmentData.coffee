@@ -1,19 +1,19 @@
 #if Tag.documents.find().count() is 0
 _randomInt = (upperLimit) -> Math.round(Math.random() * upperLimit)
 
-checkRootAccess = ->
-  Security.checkRole 'admin', "Root access not granted"
+checkRootAccess = (_this) ->
+  Security.checkRole _this, 'admin', "Root access not granted"
 
 Meteor.methods(
   reset: ->
-    checkRootAccess()
+    checkRootAccess(this)
 
     Meteor.call 'deleteEverything'
     Meteor.call 'createTestData'
 
 
   deleteEverything: ->
-    checkRootAccess()
+    checkRootAccess(this)
 
     Tags.remove({})
     Topics.remove({})
@@ -21,7 +21,7 @@ Meteor.methods(
     share.IncludeDefaultData()
 
   createTestData: ->
-    checkRootAccess()
+    checkRootAccess(this)
 
     TAG_COUNT = 10
     TOPIC_COUNT = 30
