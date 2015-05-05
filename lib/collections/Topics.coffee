@@ -4,12 +4,12 @@
 #    fields: =>
 #      tags: [ @ReferenceField Tag, ['name'] ]
 
-Topics = new Mongo.Collection "topics"
+topics = new Mongo.Collection "topics"
 
-Topics.SUBSCRIPTIONS =
+topics.SUBSCRIPTIONS =
   ALL: "subscriptions:topics/all"
 
-Topics.SCHEMA = new SimpleSchema(
+topics.SCHEMA = new SimpleSchema(
   name:
     type: String
     label: 'Topic name'
@@ -41,6 +41,6 @@ Topics.SCHEMA = new SimpleSchema(
     optional: true
 )
 
-@Topics = Topics
+@Topics = _.extend @Topics ? {}, topics
 
 @Topics.attachSchema @Topics.SCHEMA

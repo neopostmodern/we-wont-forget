@@ -21,6 +21,7 @@ share.ERRORS =
 
 share.METHODS =
   ADD_TAG: 'addTag'
+  CREATE_TOPIC: 'createTopic'
   SUGGEST_TOPIC: 'suggestTopic'
   CONFIRM_SUBSCRIPTION: 'confirmSubscription'
   SUBSCRIBE_WITH_EMAIL: 'subscribeWithEmail'

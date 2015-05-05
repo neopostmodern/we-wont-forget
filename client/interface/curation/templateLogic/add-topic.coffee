@@ -2,7 +2,7 @@ Template.add_topic.events(
   'submit .create-topic': (event, template) ->
     event.preventDefault()
 
-    Meteor.call('createTopic',
+    Meteor.call(share.METHODS.CREATE_TOPIC,
       name: template.find('.topic-title').value
       dateStarted: moment(template.find('.topic-start_date').value, "YYYY-MM-DD").toDate()
     , (error) ->

@@ -3,6 +3,7 @@ Schema = {}
 Schema.UserProfile = new SimpleSchema(
   supportedTopicIds:
     type: [ String ]
+    maxCount: 1000
     label: 'Supported Topic IDs'
   username:
     type: String

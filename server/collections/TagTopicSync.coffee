@@ -141,7 +141,7 @@ methods[share.METHODS.ADD_WIKIPEDIA_PAGE_BY_TITLE] = (wikipediaPageTitle, topicI
 
   Meteor.call share.METHODS.ADD_WIKIPEDIA_PAGE_ID, pageId, topicId
 
-methods['createTopic'] = (topic) ->
+methods[share.METHODS.CREATE_TOPIC] = (topic) ->
   Security.checkRole this, 'curator', 'Insufficient privileges to create topic.'
 
   topic ?= {}
