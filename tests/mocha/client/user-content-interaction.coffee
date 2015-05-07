@@ -1,113 +1,94 @@
 should = chai.should()
 expect = chai.expect
 
+_createUserAndLogIn = (done, groups) ->
+  groups ?= []
+
+  Meteor.call('createUserInGroups', groups,
+    TestUtility.AsyncForward done, (createdUser) ->
+      user = createdUser
+
+      Meteor.loginWithPassword(id: user._id, user.password,
+        TestUtility.Async done, ->
+          expect(Meteor.userId()).to.exist
+          console.log "User logged in: " + user._id
+      )
+  )
+
 if MochaWeb?
   MochaWeb.testOnly ->
-    describe 'Topics / not logged in', ->
-      before (done) ->
-        Meteor.call 'clear', TestUtility.Async(done)
+    describe 'Topics', ->
+      afterEach (done) ->
+        Meteor.logout -> done()
 
-      it "should not allow topic creation", (done) ->
-        Meteor.call(share.METHODS.CREATE_TOPIC,
-          Topics._Testing.GenerateData(),
-          TestUtility.AsyncClassic done, (error, result) ->
-            should.exist(error)
-            should.not.exist(result)
-            error.error.should.equal 403
-            done()
-        )
-        return
+      describe '[not logged in]', ->
+  #      before (done) ->
+  #        Meteor.call 'clear', TestUtility.Async(done)
 
-      it "suggest topic", (done) ->
-        topic = Topics._Testing.GenerateSuggestion()
-
-        Meteor.call(share.METHODS.SUGGEST_TOPIC,
-          topic,
-          TestUtility.Async(done, (result) ->
-            Meteor.methods('searchInMailProxy',
-              $contains: subject: topic.title,
-              TestUtility.Async done, (result) ->
-                result.count().should.equal(1)
-            )
+        it "should not allow topic creation", (done) ->
+          Meteor.call(share.METHODS.CREATE_TOPIC,
+            Topics._Testing.GenerateData(),
+            TestUtility.AsyncErrors.Expect403(done)
           )
-        )
+          return
 
+        it "prohibit topic suggestion", (done) ->
+          topic = Topics._Testing.GenerateSuggestion()
 
-    describe 'Topics / logged in [curator]', ->
-      user = null
-
-      before (done) ->
-        Meteor.call 'clear', (error) ->
-          if error?
-            done(error)
-            return
-
-          Meteor.call('createUserInGroups', ['curator'], (error, createdUser) ->
-            if error?
-              done(error)
-              return
-
-            user = createdUser
-
-            console.log user
-
-            Meteor.loginWithPassword(id: user._id, user.password,
-              (error) ->
-                if error?
-                  done(error)
-                  return
-
-                done()
-            )
+          Meteor.call(share.METHODS.SUGGEST_TOPIC,
+            topic,
+            TestUtility.AsyncErrors.Expect403(done)
           )
 
-      it 'should create topic', (done) ->
-        topic = Topics._Testing.GenerateData()
-        Meteor.call(share.METHODS.CREATE_TOPIC,
-          topic,
-          TestUtility.Async done, (result) ->
-            should.exist(result)
 
-            # result.should.include.keys topic
-            result.name.should.equal topic.name
-            moment(result.dateStarted).toDate().getTime().should.equal topic.dateStarted.getTime()
-        )
+      describe '[logged in (regular)]', ->
+        user = null
 
-    describe 'Topics / logged in [regular user]', ->
-      user = null
+        beforeEach (done) ->
+          console.log 'creating user'
+          # Meteor.call 'clear', TestUtility.AsyncForward done, ->
+          _createUserAndLogIn(done)
 
-      before (done) ->
-        Meteor.call 'clear', (error) ->
-          if error?
-            done(error)
-            return
 
-          Meteor.call('createUserInGroups', [], (error, createdUser) ->
-            if error?
-              done(error)
-              return
+        it "should not allow topic creation", (done) ->
+          Meteor.call(share.METHODS.CREATE_TOPIC,
+            Topics._Testing.GenerateData(),
+            TestUtility.AsyncErrors.Expect403(done)
+          )
 
-            user = createdUser
+        it "suggest topic", (done) ->
+          topic = Topics._Testing.GenerateSuggestion()
 
-            console.log user
+          expect(Meteor.userId()).to.exist
+          console.log "I am #{ Meteor.userId() }"
 
-            Meteor.loginWithPassword(id: user._id, user.password,
-              (error) ->
-                if error?
-                  done(error)
-                  return
-
-                done()
+          Meteor.call(share.METHODS.SUGGEST_TOPIC,
+            topic,
+            TestUtility.Async(done, (result) ->
+              Meteor.methods('searchInMailProxy',
+                $contains: subject: topic.title,
+                TestUtility.Async done, (result) ->
+                  result.count().should.equal(1)
+              )
             )
           )
 
-      it "should not allow topic creation", (done) ->
-        topic = Topics._Testing.GenerateData()
-        Meteor.call(share.METHODS.CREATE_TOPIC,
-          topic,
-          TestUtility.AsyncClassic done, (error, result) ->
-            should.exist(error)
-            should.not.exist(result)
-            error.error.should.equal 403
-            done()
-        )
+
+      describe '[logged in (curator)]', ->
+        user = null
+
+        beforeEach (done) ->
+          #Meteor.call 'clear', TestUtility.AsyncClassic done, ->
+          _createUserAndLogIn(done, ['curator'])
+
+        it 'should create topic', (done) ->
+          topic = Topics._Testing.GenerateData()
+          Meteor.call(share.METHODS.CREATE_TOPIC,
+            topic,
+            TestUtility.Async done, (result) ->
+              should.exist(result)
+
+              # result.should.include.keys topic
+              result.name.should.equal topic.name
+              moment(result.dateStarted).toDate().getTime().should.equal topic.dateStarted.getTime()
+          )

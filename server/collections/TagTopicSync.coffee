@@ -100,7 +100,7 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
 
   tag.visibility ?= ['all']
 
-  if not (Security.isServerSideCall() or tag.visibility.filter((role) -> not Roles.userIsInRole(Meteor.userId(), role)).length is 0)
+  if not (Security.isServerSideCall(this) or tag.visibility.filter((role) -> not Roles.userIsInRole(Meteor.userId(), role)).length is 0)
     throw new Meteor.Error(403, "User not  allowed to specify this visibility constraint.")
 
   check tag, Tags.SCHEMA
@@ -108,7 +108,7 @@ methods[share.METHODS.ADD_TAG] = (tag) ->
   if Tags.find(name: tag.name).count() > 0
     throw new Meteor.Error("Duplicate tag name")
 
-  if Security.isServerSideCall() and _id?
+  if Security.isServerSideCall(this) and _id?
     tag._id = _id
 
   Tags.insert(tag)
@@ -157,9 +157,16 @@ methods[share.METHODS.CREATE_TOPIC] = (topic) ->
   return Topics.findOne topicId
 
 methods[share.METHODS.SUGGEST_TOPIC] = (topic) ->
+  Security.checkLoggedIn(this, "Please log in to submit suggestions")
+
   check topic, { title: String, description: String, dateStarted: Match.Optional(Date) }
 
-  text = "Project \"we won't forget\"\n\nNew topic suggested: #{topic.title}\n"
+  @unblock()
+
+  suggestion = _.extend {}, topic, type: "topic"
+  suggestionId = Suggestions.insert(suggestion)
+
+  text = "Project \"we won't forget\"\n\nNew topic suggested: #{topic.title}\nSuggestion-ID: #{ suggestionId }\n"
   if topic.dateStarted?
     text += "Started #{new moment(topic.dateStarted).format("YYYY-MM-DD")}\n"
   else
@@ -167,10 +174,10 @@ methods[share.METHODS.SUGGEST_TOPIC] = (topic) ->
   text += "Description:\n\"#{ topic.description }\""
   text += "\n\nBest,\nYour server."
 
-  Meteor.call('email', {
+  Meteor.call('wwf.email', {
     from: 'clemens@neopostmodern.com'
     to: 'clemens@neopostmodern.com'
-    subject: "WE WON'T FORGET - New topic suggested: #{topic.title}"
+    subject: "WE WON'T FORGET - New topic suggested: #{topic.title} [##{ suggestionId }]"
     text: text
   })
 

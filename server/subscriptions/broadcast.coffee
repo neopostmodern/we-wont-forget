@@ -51,7 +51,7 @@ Meteor.methods(
       Meteor.call('generateBroadcastForUserAsMarkdown', subscription._id, (error, markdown) ->
         # console.log "For #{subscription.email}:\n#{markdown}\n"
 
-        Meteor.call('email',
+        Meteor.call('wwf.email',
           subject: "we won't forget - #{ moment().format('wo') } broadcast of #{ moment().format('YYYY') }"
           text: markdown
           to: subscription.email

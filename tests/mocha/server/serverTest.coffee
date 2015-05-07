@@ -1,3 +1,6 @@
+Meteor.startup ->
+  Meteor.call 'clear'
+
 #if MochaWeb?
 #  MochaWeb.testOnly ->
 #    describe 'a group of tests', ->

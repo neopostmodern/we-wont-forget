@@ -1,12 +1,32 @@
+expect = chai.expect
+console.dir expect
+
 @TestUtility =
   Async: (done, assertions) ->
     (error, result) ->
+      if error?
+        done(error)
+        return
+
       try
         if assertions?
           assertions(result)
-        done(error)
+        done()
       catch assertionError
         done(assertionError)
+
+  AsyncForward: (done, assertions) ->
+    (error, result) ->
+      if error?
+        done(error)
+        return
+
+      try
+        if assertions?
+          assertions(result)
+      catch assertionError
+        done(assertionError)
+
 
   AsyncClassic: (done, assertions) ->
     (error, result) ->
@@ -14,6 +34,20 @@
         assertions(error, result)
       catch assertionError
         done(assertionError)
+
+  AsyncErrors:
+    Expect403: (done) ->
+      TestUtility.AsyncClassic done, (error, result) ->
+        expect(error)
+          .to.exist
+
+        expect(result)
+          .not.to.exist
+
+        expect(error.error)
+          .to.equal 403
+
+        done()
 
   ## generate primitives
 
@@ -34,15 +68,15 @@
 
     options ?= {}
 
-    date = moment()
+    dateAsMoment = moment()
 
     if options.pastYears? or options.futureYears?
-      date.add(TestUtility.GenerateRandomInteger(
+      dateAsMoment.add(TestUtility.GenerateRandomInteger(
         -1 * (options.pastYears ? 0) * YEAR_IN_SECONDS,
         (options.futureYears ? 0) * YEAR_IN_SECONDS
-      ))
+      ), 's')
 
-    return date
+    return dateAsMoment.toDate()
 
   ## generate topics
 

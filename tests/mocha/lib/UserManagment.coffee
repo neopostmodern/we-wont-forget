@@ -1,10 +1,7 @@
 if Meteor.isServer
   Meteor.methods(
-    clear: ->
-      Meteor.users.remove {}
-
     createUserInGroups: (roles, options) ->
-      _.defaults (options ? {}), {
+      options = _.defaults (options ? {}), {
         hasUsername: true
         hasEmail: true
       }
@@ -18,10 +15,10 @@ if Meteor.isServer
         user.username = 'username'
 
       if options.hasEmail
-        user.email = TestUtility
-
-
-      # todo: enable email
+        user.emails = [
+          address: TestUtility.GenerateRandomEmail()
+          verified: true
+        ]
 
       user._id = Accounts.createUser(_.extend {}, user, pending: 0)
 

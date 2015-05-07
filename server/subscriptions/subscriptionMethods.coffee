@@ -23,7 +23,7 @@ methods[share.METHODS.SUBSCRIBE_WITH_EMAIL] = (emailAddress) ->
 
   subscriptionId = Subscriptions.insert subscription
 
-  Meteor.call 'email', {
+  Meteor.call 'wwf.email', {
     to: emailAddress
     subject: 'Confirm subscription to the Project "we won\'t forget"'
     text: "Poject \"We won't forget\"\n\nCONFIRM SUBSCRIPTION\nClick here to confirm: #{ Meteor.absoluteUrl() }_/confirmSubscription/#{ subscriptionId }\n\nBest,\nThe server"

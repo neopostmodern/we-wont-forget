@@ -6,7 +6,7 @@ Meteor.startup ->
   process.env.MAIL_URL = "smtp://#{ Meteor.settings.email.mailgun.username }:#{ Meteor.settings.email.mailgun.password }@smtp.mailgun.org"
 
 Meteor.methods(
-  'email': (email) ->
+  "wwf.email": (email) ->
     email.from ?= "#{ Meteor.settings.email.from.name } <#{ Meteor.settings.email.from.emailAddress }>"
 
     # todo: mailgun doesn't work?
